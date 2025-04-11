@@ -285,3 +285,14 @@ class IncidentCreateView(CreateView):
     form_class =  Incident_Form
     template_name= 'incident_add.html'
     success_url = reverse_lazy('incident-list')
+
+class IncidentUpdateView(UpdateView):
+    model = Incident
+    form_class =  Incident_Form
+    template_name= 'incident_edit.html'
+    success_url = reverse_lazy('incident-list')
+    
+class IncidentDeleteView(DeleteView):
+    model = Incident
+    template_name= 'incident_del.html'
+    success_url = reverse_lazy('incident-list')
