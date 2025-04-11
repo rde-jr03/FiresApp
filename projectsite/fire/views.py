@@ -224,3 +224,21 @@ def fire_incident_map(request):
 def firestation_list(request):
     firestations = FireStation.objects.all()
     return render(request, 'stationlist.html', {'object_list': firestations})
+
+class firestationListView(ListView):
+    model = FireStation
+    template_name = 'station_list.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(
+                Q(name__icontains=query) |
+                Q(address__icontains=query) |
+                Q(city__icontains=query) |
+                Q(country__icontains=query)
+            )
+        return qs
