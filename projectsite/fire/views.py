@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from fire.models import Locations, Incident, FireStation
+from fire.models import Locations, FireStation, Incident
 from fire.forms import FireStationzForm
 from django.db.models.query import QuerySet
 from django.db.models import Q
@@ -261,3 +261,21 @@ class firestationDeleteView(DeleteView):
     model = FireStation
     template_name= 'station_del.html'
     success_url = reverse_lazy('station-list')
+
+class IncidentListView(ListView):
+    model = Incident
+    template_name = 'incident_list.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(
+                Q(description__icontains=query) |
+                Q(severity_level__icontains=query) |
+                Q(location__name__icontains=query) |  # Assuming Locations model has a 'name' field
+                Q(date_time__icontains=query)  # Assuming you want to search by date_time
+            )
+        return qs
