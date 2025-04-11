@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from fire.models import Locations, FireStation, Incident
-from fire.forms import FireStationzForm
+from fire.forms import FireStationzForm, Incident_Form
 from django.db.models.query import QuerySet
 from django.db.models import Q
 
@@ -279,3 +279,9 @@ class IncidentListView(ListView):
                 Q(date_time__icontains=query)  # Assuming you want to search by date_time
             )
         return qs
+    
+class IncidentCreateView(CreateView):
+    model = Incident
+    form_class =  Incident_Form
+    template_name= 'incident_add.html'
+    success_url = reverse_lazy('incident-list')
