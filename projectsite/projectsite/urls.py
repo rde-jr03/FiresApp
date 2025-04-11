@@ -5,6 +5,7 @@ from fire.views import HomePageView, ChartView, PieCountbySeverity, LineCountbyM
 from fire.views import firestationListView, firestationCreateView, firestationUpdateView, firestationDeleteView
 from fire.views import IncidentListView, IncidentCreateView, IncidentUpdateView, IncidentDeleteView
 from fire.views import LocationListView, LocationCreateView, LocationUpdateView, LocationDeleteView
+from fire.views import ConditionListView, ConditionCreateView, ConditionUpdateView, ConditionDeleteView
 from fire import views
 
 urlpatterns = [
@@ -33,4 +34,9 @@ urlpatterns = [
     path('location_list/add', LocationCreateView.as_view(), name='location-add'),
     path('location_list/<pk>', LocationUpdateView.as_view(), name='location-update'),
     path('location_list/<pk>/delete/', LocationDeleteView.as_view(), name='location-delete'),
+
+    path('condition_list/',  ConditionListView.as_view(), name='weather-list'),
+    path('condition_list/add', ConditionCreateView.as_view(), name='condition-add'),
+    path('condition_list/<pk>', ConditionUpdateView.as_view(), name='condition-update'),
+    path('condition_list/<pk>/delete/', ConditionDeleteView.as_view(), name='condition-delete'),
 ]
