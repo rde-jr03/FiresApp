@@ -3,6 +3,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from fire.models import Locations, FireStation, Incident
 from fire.forms import FireStationzForm, Incident_Form
+from fire.forms import Loc_Form
 from django.db.models.query import QuerySet
 from django.db.models import Q
 
@@ -296,3 +297,38 @@ class IncidentDeleteView(DeleteView):
     model = Incident
     template_name= 'incident_del.html'
     success_url = reverse_lazy('incident-list')
+
+class LocationListView(ListView):
+    model = Locations
+    template_name = 'loc_list.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        query = self.request.GET.get("q")
+        if query:
+            qs = qs.filter(
+                Q(name__icontains=query) |
+                Q(address__icontains=query) |
+                Q(city__icontains=query) |
+                Q(country__icontains=query)
+            )
+        return qs
+    
+class LocationCreateView(CreateView):
+    model = Locations
+    form_class = Loc_Form
+    template_name= 'loc_add.html'
+    success_url = reverse_lazy('loc-list')
+    
+class LocationUpdateView(UpdateView):
+    model = Locations
+    form_class = Loc_Form
+    template_name= 'loc_edit.html'
+    success_url = reverse_lazy('loc-list')
+    
+class LocationDeleteView(DeleteView):
+    model = Locations
+    template_name= 'loc_del.html'
+    success_url = reverse_lazy('loc-list')

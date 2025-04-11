@@ -4,6 +4,7 @@ from django.urls import path
 from fire.views import HomePageView, ChartView, PieCountbySeverity, LineCountbyMonth, MultilineIncidentTop3Country, multipleBarbySeverity, map_station, fire_incident_map
 from fire.views import firestationListView, firestationCreateView, firestationUpdateView, firestationDeleteView
 from fire.views import IncidentListView, IncidentCreateView, IncidentUpdateView, IncidentDeleteView
+from fire.views import LocationListView, LocationCreateView, LocationUpdateView, LocationDeleteView
 from fire import views
 
 urlpatterns = [
@@ -27,4 +28,9 @@ urlpatterns = [
     path('incident_list/add', IncidentCreateView.as_view(), name='incident-add'),
     path('incident_list/<pk>', IncidentUpdateView.as_view(), name='incident-update'),
     path('incident_list/<pk>/delete/', IncidentDeleteView.as_view(), name='incident-delete'),
+
+    path('location_list/',  LocationListView.as_view(), name='loc-list'),
+    path('location_list/add', LocationCreateView.as_view(), name='location-add'),
+    path('location_list/<pk>', LocationUpdateView.as_view(), name='location-update'),
+    path('location_list/<pk>/delete/', LocationDeleteView.as_view(), name='location-delete'),
 ]
