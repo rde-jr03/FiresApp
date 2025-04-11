@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.urls import reverse_lazy
 from fire.models import Locations, Incident, FireStation
+from fire.forms import FireStationzForm
 from django.db.models.query import QuerySet
 from django.db.models import Q
 
@@ -242,3 +243,10 @@ class firestationListView(ListView):
                 Q(country__icontains=query)
             )
         return qs
+    
+
+class firestationCreateView(CreateView):
+    model = FireStation
+    form_class = FireStationzForm
+    template_name= 'station_add.html'
+    success_url = reverse_lazy('station-list')
