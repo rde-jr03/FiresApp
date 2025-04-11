@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from fire.models import Locations, Incident, FireStation
 from fire.forms import FireStationzForm
@@ -249,4 +249,15 @@ class firestationCreateView(CreateView):
     model = FireStation
     form_class = FireStationzForm
     template_name= 'station_add.html'
+    success_url = reverse_lazy('station-list')
+
+class firestationUpdateView(UpdateView):
+    model = FireStation
+    form_class = FireStationzForm
+    template_name= 'station_edit.html'
+    success_url = reverse_lazy('station-list')
+
+class firestationDeleteView(DeleteView):
+    model = FireStation
+    template_name= 'station_del.html'
     success_url = reverse_lazy('station-list')
