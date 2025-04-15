@@ -425,7 +425,7 @@ class FirefightersCreateView(CreateView):
 class FirefightersUpdateView(UpdateView):
     model = Firefighters
     form_class = FirefightersForm
-    template_name = 'firefighter_edit.html'
+    template_name = 'firefigther_edit.html'
     success_url = reverse_lazy('firefighters-list')
 
 class FirefightersDeleteView(DeleteView):
