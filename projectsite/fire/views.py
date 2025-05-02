@@ -551,7 +551,8 @@ class ConditionDeleteView(DeleteView):
     success_url = reverse_lazy('weather-list')
 
     def form_valid(self, form):
-        WeatherConditions_temperature = form.instance.temperature 
+        obj = self.get_object()
+        WeatherConditions_temperature = obj.temperature 
         messages.success(self.request, f'{WeatherConditions_temperature} has been successfully deleted.')
 
         return super().form_valid(form)
